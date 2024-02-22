@@ -3,11 +3,14 @@ function getTextValueInNum(elementId){
     const converted = parseInt(element);
    return converted;
 }
+function hideElementById(elementId){
+    const element = document.getElementById(elementId);
+    element.classList.add('hidden');
+}
 
 const allSlot = document.getElementsByClassName('slot');
-
-for (const seat of allSlot){
-  seat.addEventListener("click",function(event){
+for (const slot of allSlot){
+  slot.addEventListener("click",function(event){
     const seat = event.target.parentNode.childNodes[1].childNodes[1].innerText;
     const classType = event.target.parentNode.childNodes[1].childNodes[3].innerText;
     const price = event.target.parentNode.childNodes[1].childNodes[5].innerText;
@@ -17,8 +20,10 @@ for (const seat of allSlot){
     if(limit+1>4)
     {
       alert('Boundary exceeded!!')
+       return;
     }
-    event.target.style.backgroundColor = 'lightblue';
+    
+    event.target.style.backgroundColor = '#1DD100';
 
     const leftSeat = getTextValueInNum('left-seat');
     document.getElementById('left-seat').innerText = leftSeat-1;
@@ -45,9 +50,9 @@ for (const seat of allSlot){
     div.appendChild(p3);
 
     selectedSeat.appendChild(div);
-    totalCost(price)
-    grandtotal()
-
+    totalCost(price);
+    grandtotal();
+    
   })
 }
 
@@ -75,20 +80,26 @@ function grandtotal(id){
     const discount = price*0.15;
     const grandPrice = document.getElementById("Grand-total");
     grandPrice.innerHTML = price - discount;
+    hideElementById('input-section');
 
   }
   else if(coupon == 'Couple 20'){
     const discount = price*0.2;
     const grandPrice = document.getElementById("Grand-total");
     grandPrice.innerHTML = price - discount;
+    hideElementById('input-section');
   }
 
   else{
-    alert('Enter a valid coupon code')
+    alert('Enter a valid coupon code');
   }
 
 }
 }
+document.getElementById('btn').addEventListener("click",function(event){
+    grandtotal('btn');
+   
+})
 
 
 
